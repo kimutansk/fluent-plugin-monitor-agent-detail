@@ -85,9 +85,9 @@ Show output example with following configuration:
     {
       "plugin_id": "object:3fc716c6ea54",
       "plugin_category": "input",
-      "type": "monitor_agent",
+      "type": "monitor_agent_detail",
       "config": {
-        "@type": "monitor_agent",
+        "@type": "monitor_agent_detail",
         "bind": "0.0.0.0",
         "port": "24220"
       },
@@ -132,9 +132,9 @@ Show output example with following configuration:
     {
       "plugin_id": "object:3fc716c6ea54",
       "plugin_category": "input",
-      "type": "monitor_agent",
+      "type": "monitor_agent_detail",
       "config": {
-        "@type": "monitor_agent",
+        "@type": "monitor_agent_detail",
         "bind": "0.0.0.0",
         "port": "24220"
       },
