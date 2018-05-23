@@ -77,6 +77,7 @@ Show output example with following configuration:
 </match>
 ```
 
+### Basic response
 
 ```
 {
@@ -113,10 +114,63 @@ Show output example with following configuration:
         "require_ack_response": "true"
       },
       "output_plugin": true,
-      "buffer_queue_length": 3,
-      "buffer_total_queued_size": 364357,
-      "buffer_total_queued_ratio": 0.0347,
-      "retry_count": 3,
+      "buffer_queue_length": 1,
+      "buffer_total_queued_size": 3643,
+      "buffer_total_queued_ratio": 0.0003,
+      "retry_count": 0,
       "retry": {}
+    }
+  ]
+}
+```
+
+### In retry
+
+```
+{
+  "plugins": [
+    {
+      "plugin_id": "object:3fc716c6ea54",
+      "plugin_category": "input",
+      "type": "monitor_agent",
+      "config": {
+        "@type": "monitor_agent",
+        "bind": "0.0.0.0",
+        "port": "24220"
+      },
+      "output_plugin": false,
+      "retry_count": null
     },
+    {
+      "plugin_id": "object:3fc717453d14",
+      "plugin_category": "input",
+      "type": "forward",
+      "config": {
+        "@type": "forward",
+        "port": "24224"
+      },
+      "output_plugin": false,
+      "retry_count": null
+    },
+    {
+      "plugin_id": "forward_to_aggregation",
+      "plugin_category": "output",
+      "type": "forward",
+      "config": {
+        "@type": "forward",
+        "require_ack_response": "true"
+      },
+      "output_plugin": true,
+      "buffer_queue_length": 1204,
+      "buffer_total_queued_size": 7836254,
+      "buffer_total_queued_ratio": 0.7473,
+      "retry_count": 976,
+      "retry": {
+        "start": "2018-05-23 09:45:56 +0900",
+        "steps": 975,
+        "next_time": "2018-05-23 12:11:14 +0900"
+      }
+    }
+  ]
+}
 ```
