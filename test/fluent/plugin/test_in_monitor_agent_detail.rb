@@ -1,6 +1,6 @@
 require_relative '../helper'
 require 'fluent/test/driver/input'
-require 'fluent/plugin/in_monitor_agent'
+require 'fluent/plugin/in_monitor_agent_detail'
 require 'fluent/engine'
 require 'fluent/config'
 require 'fluent/event_router'
@@ -15,7 +15,7 @@ class MonitorAgentInputTest < Test::Unit::TestCase
   end
 
   def create_driver(conf = '')
-    Fluent::Test::Driver::Input.new(Fluent::Plugin::MonitorAgentInput).configure(conf)
+    Fluent::Test::Driver::Input.new(Fluent::Plugin::MonitorAgentDetailInput).configure(conf)
   end
 
   def configure_ra(ra, conf_str)
@@ -123,6 +123,7 @@ EOC
       output_info.merge!("config" => {"@id" => "test_out", "@type" => "test_out"}) if with_config
       error_label_info = {
         "buffer_queue_length" => 0,
+        "buffer_total_queued_ratio" => 0.0,
         "buffer_total_queued_size" => 0,
         "output_plugin"   => true,
         "plugin_category" => "output",
@@ -296,6 +297,7 @@ plugin_id:test_filter\tplugin_category:filter\ttype:test_filter\toutput_plugin:f
       expected_test_in_response.merge!("config" => {"@id" => "test_in", "@type" => "test_in"}) if with_config
       expected_null_response = {
         "buffer_queue_length" => 0,
+        "buffer_total_queued_ratio" => 0.0,
         "buffer_total_queued_size" => 0,
         "output_plugin"   => true,
         "plugin_category" => "output",
@@ -333,6 +335,7 @@ plugin_id:test_filter\tplugin_category:filter\ttype:test_filter\toutput_plugin:f
       expected_test_in_response.merge!("config" => {"@id" => "test_in", "@type" => "test_in"}) if with_config
       expected_null_response = {
         "buffer_queue_length" => 0,
+        "buffer_total_queued_ratio" => 0.0,
         "buffer_total_queued_size" => 0,
         "output_plugin"   => true,
         "plugin_category" => "output",
@@ -367,6 +370,7 @@ plugin_id:test_filter\tplugin_category:filter\ttype:test_filter\toutput_plugin:f
       }
       expected_null_response = {
         "buffer_queue_length" => 0,
+        "buffer_total_queued_ratio" => 0.0,
         "buffer_total_queued_size" => 0,
         "output_plugin"   => true,
         "plugin_category" => "output",
@@ -436,6 +440,7 @@ plugin_id:test_filter\tplugin_category:filter\ttype:test_filter\toutput_plugin:f
   @id test_out_fail_write
   <buffer>
     flush_mode immediate
+    total_limit_size 1024
   </buffer>
 </match>
       EOC
@@ -455,6 +460,7 @@ plugin_id:test_filter\tplugin_category:filter\ttype:test_filter\toutput_plugin:f
       d.instance.start
       expected_test_out_fail_write_response = {
           "buffer_queue_length" => 1,
+          "buffer_total_queued_ratio" => 0.0391,
           "buffer_total_queued_size" => 40,
           "output_plugin" => true,
           "plugin_category" => "output",
