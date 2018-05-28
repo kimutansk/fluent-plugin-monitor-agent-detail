@@ -13,6 +13,12 @@ This plugin outputs below additional informations compared with in_monitor_agent
 |------------|--------|
 | >= v0.14.0 | >= 2.1 |
 
+## Installation
+
+```
+$ gem install fluent-plugin-monitor-agent-detail
+```
+
 ## Example Configuration
 
 ```
