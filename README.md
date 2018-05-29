@@ -180,3 +180,14 @@ Show output example with following configuration:
   ]
 }
 ```
+
+### Usage example
+
+[get_max_queued_ratio.rb](tools/get_max_queued_ratio.rb) shows response parse example.
+
+
+```
+$ ruby get_max_queued_ratio.rb localhost 24220
+0.7473
+
+```
