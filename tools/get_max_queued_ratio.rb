@@ -11,6 +11,7 @@
 #    limitations under the License.
 require 'json'
 require "net/http"
+require 'uri'
 
 class MaxQueuedRatioGetter
 
@@ -20,17 +21,33 @@ class MaxQueuedRatioGetter
     end
 
     def get_max_queued_ratio()
-        # TODO Implement
-        return 0.0
+        url = URI.parse("http://#{@host}:#{@port}")
+        res = Net::HTTP.start(url.host, url.port) {|http|
+            http.get("/api/plugins.json")
+        }
+        response = JSON.parse(res.body)
+
+        max_queued_ratio = 0.0
+        if response.has_key?("plugins")
+            response["plugins"].each {|plugin|
+                if plugin.has_key?("buffer_total_queued_ratio")
+                    if max_queued_ratio < plugin["buffer_total_queued_ratio"]
+                        max_queued_ratio = plugin["buffer_total_queued_ratio"]
+                    end
+                end
+            }
+        end
+
+        max_queued_ratio
     end
 end
 
 if __FILE__ == $0
-    if ARGV.size < 3
+    if ARGV.size < 2
         puts "Usage: ruby get_max_queued_ratio.rb [host] [port]"
         exit(1)
     end
 
-    instance = MaxQueuedRatioGetter.new(ARGV[1], ARGV[2])
+    instance = MaxQueuedRatioGetter.new(ARGV[0], ARGV[1])
     puts instance.get_max_queued_ratio()
 end
