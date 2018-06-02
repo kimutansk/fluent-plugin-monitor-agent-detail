@@ -191,3 +191,7 @@ $ ruby get_max_queued_ratio.rb localhost 24220
 0.7473
 
 ```
+
+### License
+
+- License: Apache License, Version 2.0
